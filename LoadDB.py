@@ -30,7 +30,7 @@ print('nightlife_rank deleted...')
 db.commit()
 print('Tables cleared')
 
-# cursor.execute("CREATE TABLE nba_abbreviations_temp (Name VARCHAR(50), Abbreviations VARCHAR(4));")
+cursor.execute("CREATE TABLE nba_abbreviations_temp (Name VARCHAR(50), Abbreviations VARCHAR(4));")
 cursor.execute("CREATE TABLE NBA_tot_seasons (ID VARCHAR(50) PRIMARY KEY, Year INTEGER, R INTEGER, Player VARCHAR(50), Pos VARCHAR(5), BasePos VARCHAR(2), Age NUMERIC(4,1), Tm VARCHAR(50), G NUMERIC(4,1), GS NUMERIC(4,1), MP NUMERIC(6,1), FG NUMERIC(5,1), FGA NUMERIC(5,1), FGpercent NUMERIC(4,3), ThrP NUMERIC(5,1), ThrPA NUMERIC(5,1), ThrPpercent NUMERIC(4,3), TwoP NUMERIC(5,1), TwoPA NUMERIC(5,1), TwoPpercent NUMERIC(4,3), eFGpercent NUMERIC(4,3), FT NUMERIC(5,1), FTA NUMERIC(5,1), FTpercent NUMERIC(4,3), ORB NUMERIC(5,1), DRB NUMERIC(5,1), TRB NUMERIC(5,1), AST NUMERIC(5,1), STL NUMERIC(4,1), BLK NUMERIC(4,1), TOV NUMERIC(5,1), PF NUMERIC(4,1), PTS NUMERIC(6,1));")
 cursor.execute("CREATE TABLE nba_adv_seasons(ID VARCHAR(50) PRIMARY KEY, Year INTEGER, R INTEGER, Player VARCHAR(50), Pos VARCHAR(5), BasePos VARCHAR(2), Age NUMERIC(4,1), Tm VARCHAR(50), G NUMERIC(4,1), MP NUMERIC(6,1), PER NUMERIC(4,1), TSpercent NUMERIC(4,3), ThrPAr NUMERIC(4,3), FTr NUMERIC(4,3), ORBpercent NUMERIC(4,1), DRBpercent NUMERIC(4,1), TRBpercent NUMERIC(4,1), ASTpercent NUMERIC(4,1), STLpercent NUMERIC(4,1), BLKpercent NUMERIC(4,1), TOVpercent NUMERIC(4,1), USG NUMERIC(4,1), zeroA NUMERIC(2,1), OWS NUMERIC(4,1), DWS NUMERIC(4,1), WS NUMERIC(4,1), WSper48 NUMERIC(2,1), OBPM NUMERIC(4,1), DBPM NUMERIC(4,1), BPM NUMERIC(4,1), VORP NUMERIC(2,1));")
 cursor.execute("CREATE TABLE nba_games(Year INTEGER, Date DATE, href VARCHAR(50), Visitor VARCHAR(50), VPts INTEGER, Home VARCHAR(50), HPts INTEGER, OT VARCHAR(4), Attend INTEGER, Notes VARCHAR(100));")
@@ -48,7 +48,7 @@ tot_errors = []
 adv_errors = []
 game_errors = []
 
-for year in [y for y in range(2020, 2021)]:
+for year in [y for y in range(1956, 2021)]:
     print('Totals...',end='')
     copy_command = 'INSERT INTO NBA_tot_seasons VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);'
     with open(f'PlayerStats/{year}_totals.csv', 'r') as f:
