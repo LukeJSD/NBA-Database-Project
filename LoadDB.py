@@ -24,8 +24,6 @@ cursor.execute("DROP TABLE IF EXISTS nba_games;")
 print('nba_games deleted...', end='')
 cursor.execute("DROP TABLE IF EXISTS nba_abbreviations;")
 print('nba_abbreviations deleted...', end='')
-cursor.execute("DROP TABLE IF EXISTS nightlife_rank;")
-print('nightlife_rank deleted...')
 
 db.commit()
 print('Tables cleared')
@@ -171,10 +169,6 @@ if len(os.listdir('Games')) == 0:
 
 cursor.execute("UPDATE nba_games SET Attend=NULL WHERE Attend=-1;")
 cursor.execute("UPDATE nba_games SET OT=NULL WHERE OT='';")
-
-# https://www.travelandleisure.com/food-drink/bars-clubs/americas-best-cities-for-nightlife?slide=2012960#2012960
-cursor.execute("CREATE TABLE nightlife_rank (City VARCHAR(50), Rank INTEGER);")
-cursor.execute("INSERT INTO nightlife_rank VALUES ('New Orleans', 1), ('Las Vegas', 2), ('New York City', 3), ('Chicago', 4), ('Austin', 5), ('Miami', 6), ('San Juan', 7), ('Nashville', 8), ('Providence', 9), ('Los Angeles', 10), ('San Francisco', 11), ('Denver', 12), ('Portland', 13), ('Boston', 14), ('Memphis', 15), ('Savannah', 16), ('Houston', 17), ('Washington D.C.', 18), ('San Diego', 19), ('Seattle', 20);")
 
 db.commit()
 
