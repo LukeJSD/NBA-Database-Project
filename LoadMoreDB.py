@@ -9,8 +9,8 @@ from collections.abc import Iterable
 # This takes a while on the first run
 
 # Connect to database
-user = 'ljulian'
-secret = 'fleabagS2!'
+user = input('Username:')
+secret = getpass.getpass()
 print('Trying to connect...')
 db = pg8000.connect(user=user, password=secret, host='bartik.mines.edu', database='csci403')
 cursor = db.cursor()
