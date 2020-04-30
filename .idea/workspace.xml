@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="2a393430-3e98-4d11-8d42-eebb9dfbc93e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LoadDB.py" beforeDir="false" afterPath="$PROJECT_DIR$/LoadDB.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LoadMoreDB.py" beforeDir="false" afterPath="$PROJECT_DIR$/LoadMoreDB.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Testing.py" beforeDir="false" afterPath="$PROJECT_DIR$/Testing.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -105,7 +103,7 @@
       <updated>1588008391216</updated>
       <workItem from="1588008395640" duration="487000" />
       <workItem from="1588009096507" duration="57068000" />
-      <workItem from="1588188173577" duration="8757000" />
+      <workItem from="1588188173577" duration="9116000" />
     </task>
     <task id="LOCAL-00001" summary="Created file to load draft, standings, and averages">
       <created>1588193482752</created>
@@ -114,7 +112,14 @@
       <option name="project" value="LOCAL" />
       <updated>1588193482752</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Added to LoadMoreDB.py">
+      <created>1588203841127</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1588203841127</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -122,17 +127,18 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Created file to load draft, standings, and averages" />
-    <option name="LAST_COMMIT_MESSAGE" value="Created file to load draft, standings, and averages" />
+    <MESSAGE value="Added to LoadMoreDB.py" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added to LoadMoreDB.py" />
   </component>
   <component name="WindowStateProjectService">
     <state x="191" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1588197157575">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="191" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.680@0.0.1280.680" timestamp="1588197157575" />
-    <state x="212" y="0" key="CommitChangelistDialog2" timestamp="1588193481992">
+    <state x="212" y="0" key="CommitChangelistDialog2" timestamp="1588203839824">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="212" y="0" key="CommitChangelistDialog2/0.0.1280.680@0.0.1280.680" timestamp="1588193481992" />
+    <state x="212" y="0" key="CommitChangelistDialog2/0.0.1280.680@0.0.1280.680" timestamp="1588203839824" />
     <state x="740" y="95" key="FileChooserDialogImpl" timestamp="1588197155671">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
