@@ -19,8 +19,10 @@ if not os.path.exists(target_directory+'/Games'):
     os.mkdir(target_directory+'/Games')
 if not os.path.exists(target_directory+'/Standings'):
     os.mkdir(target_directory+'/Standings')
-if not os.path.exists(target_directory+'/Draft'):
-    os.mkdir(target_directory+'/Draft')
+if not os.path.exists(target_directory+'/Drafts'):
+    os.mkdir(target_directory+'/Drafts')
+if not os.path.exists(target_directory+'/Averages'):
+    os.mkdir(target_directory+'/Averages')
 
 
 def make_csv(df, string):

@@ -20,8 +20,6 @@ db = pg8000.connect(user=user, password=secret, host='bartik.mines.edu', databas
 cursor = db.cursor()
 print('Connected')
 
-cursor.execute("DROP TABLE IF EXISTS nba_abbreviations;")
-print('nba_abbreviations deleted...', end='')
 cursor.execute("DROP TABLE IF EXISTS nba_tot_seasons;")
 print('nba_tot_seasons deleted...', end='')
 cursor.execute("DROP TABLE IF EXISTS nba_adv_seasons;")
@@ -34,23 +32,29 @@ cursor.execute("DROP TABLE IF EXISTS nba_drafts;")
 print('nba_drafts deleted...', end='')
 cursor.execute("DROP TABLE IF EXISTS nba_history;")
 print('nba_history deleted...', end='')
+cursor.execute("DROP TABLE IF EXISTS nba_abbreviations;")
+print('nba_abbreviations deleted...', end='')
 
 db.commit()
 print('Tables cleared')
 
-cursor.execute("CREATE TABLE nba_abbreviations(Team VARCHAR(50), Abrev VARCHAR(4));")
+cursor.execute("CREATE TABLE nba_abbreviations(Team VARCHAR(50), Abrev VARCHAR(4) UNIQUE);")
 cursor.execute("CREATE TABLE NBA_tot_seasons (ID VARCHAR(50) PRIMARY KEY, Year INTEGER, R INTEGER, Player VARCHAR(50), Pos VARCHAR(5), BasePos VARCHAR(2), Age NUMERIC(4,1), Tm VARCHAR(50), G NUMERIC(4,1), GS NUMERIC(4,1), MP NUMERIC(6,1), FG NUMERIC(5,1), FGA NUMERIC(5,1), FGpercent NUMERIC(4,3), ThrP NUMERIC(5,1), ThrPA NUMERIC(5,1), ThrPpercent NUMERIC(4,3), TwoP NUMERIC(5,1), TwoPA NUMERIC(5,1), TwoPpercent NUMERIC(4,3), eFGpercent NUMERIC(4,3), FT NUMERIC(5,1), FTA NUMERIC(5,1), FTpercent NUMERIC(4,3), ORB NUMERIC(5,1), DRB NUMERIC(5,1), TRB NUMERIC(5,1), AST NUMERIC(5,1), STL NUMERIC(4,1), BLK NUMERIC(4,1), TOV NUMERIC(5,1), PF NUMERIC(4,1), PTS NUMERIC(6,1), FOREIGN KEY (Tm) REFERENCES nba_abbreviations(Abrev));")
 cursor.execute("CREATE TABLE nba_adv_seasons(ID VARCHAR(50) PRIMARY KEY, Year INTEGER, R INTEGER, Player VARCHAR(50), Pos VARCHAR(5), BasePos VARCHAR(2), Age NUMERIC(4,1), Tm VARCHAR(50), G NUMERIC(4,1), MP NUMERIC(6,1), PER NUMERIC(6,3), TSpercent NUMERIC(6,5), ThrPAr NUMERIC(6,5), FTr NUMERIC(6,5), ORBpercent NUMERIC(6,3), DRBpercent NUMERIC(6,3), TRBpercent NUMERIC(6,3), ASTpercent NUMERIC(6,3), STLpercent NUMERIC(6,3), BLKpercent NUMERIC(6,3), TOVpercent NUMERIC(6,3), USG NUMERIC(6,3), zeroA NUMERIC(4,3), OWS NUMERIC(6,3), DWS NUMERIC(6,3), WS NUMERIC(6,3), WSper48 NUMERIC(4,3), OBPM NUMERIC(6,3), DBPM NUMERIC(6,3), BPM NUMERIC(6,3), VORP NUMERIC(5,3), FOREIGN KEY (Tm) REFERENCES nba_abbreviations(Abrev));")
-cursor.execute("CREATE TABLE nba_games(Year INTEGER, Date DATE, href VARCHAR(50), Visitor VARCHAR(50), VPts INTEGER, Home VARCHAR(50), HPts INTEGER, OT VARCHAR(4), Attend INTEGER, Notes VARCHAR(100), FOREIGN KEY (Home) REFERENCES nba_abbreviations(Team), FOREIGN KEY (Visitor) REFERENCES nba_abbreviations(Team));")
-cursor.execute("CREATE TABLE nba_standings (ID VARCHAR(50), Year INTEGER, R INTEGER, Tm VARCHAR(50), W INTEGER, L INTEGER, Wpercent NUMERIC(4,3), GB NUMERIC(3,1), PSperG NUMERIC(4,1), PAperG NUMERIC(4,1), SRS NUMERIC(4,2), FOREIGN KEY (Tm) REFERENCES nba_abbreviations(Team));")
+cursor.execute("CREATE TABLE nba_games(Year INTEGER, Date DATE, href VARCHAR(50), Visitor VARCHAR(50), VPts INTEGER, Home VARCHAR(50), HPts INTEGER, OT VARCHAR(4), Attend INTEGER, Notes VARCHAR(100));")
+cursor.execute("CREATE TABLE nba_standings (ID VARCHAR(50), Year INTEGER, R INTEGER, Tm VARCHAR(50), W INTEGER, L INTEGER, Wpercent NUMERIC(4,3), GB NUMERIC(3,1), PSperG NUMERIC(4,1), PAperG NUMERIC(4,1), SRS NUMERIC(4,2));")
 cursor.execute("CREATE TABLE nba_drafts (ID VARCHAR(50), Year INTEGER, R INTEGER, Pk INTEGER, Tm VARCHAR(50), Player VARCHAR(50), College VARCHAR(50), Yrs INTEGER, G INTEGER, MP INTEGER, PTS INTEGER, TRB INTEGER, AST INTEGER, FGpercent NUMERIC(4,3), ThrP NUMERIC(5,1), FTpercent NUMERIC(4,3), MPperGm NUMERIC(7,3), PTSperGM NUMERIC(7,3), TRBperGm NUMERIC(7,3), ASTperGM NUMERIC(7,3), WS NUMERIC(5,2), WSper48 NUMERIC(7,3), BPM NUMERIC(3,1), VORP NUMERIC(4,1));")
 cursor.execute("CREATE TABLE nba_history (R INTEGER,Yr INTEGER,Lg VARCHAR(3),Champion VARCHAR(50),MVP VARCHAR(50),ROY VARCHAR(50),Points VARCHAR(50),Rebounds VARCHAR(50),Assists VARCHAR(50),WS VARCHAR(50));")        #  FOREIGN KEY (Champion) REFERENCES nba_abbreviations(Team)
 
 copy_command = 'INSERT INTO nba_abbreviations VALUES (%s, %s);'
 with open(f'abreviations.csv', 'r') as f:
-    for row in f.readlines()[1:]:
-        r = row.split(',')
-        cursor.execute(copy_command, (r[0], r[1]))
+    csv_read = csv.reader(f)
+    header = True
+    for row in csv_read:
+        if header:
+            header = False
+            continue
+        cursor.execute(copy_command, (row[0], row[1]))
 
 db.commit()
 
