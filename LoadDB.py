@@ -293,6 +293,7 @@ with open(f'Standings/gen_hist.csv', 'r', encoding='utf-8') as f:
             print('hist', e)
             print(r)
             cursor.execute('ROLLBACK;')
+print('General History Loaded')
 
 db.commit()
 
