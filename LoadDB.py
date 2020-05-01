@@ -3,7 +3,6 @@ import getpass
 import os
 from os import path
 import csv
-import nba_scrape
 
 current_year = 2020
 
@@ -12,6 +11,7 @@ user = input('Username: ')
 secret = getpass.getpass(prompt='Password: ')
 
 # This takes a while on the first run
+import nba_scrape
 exec('nba_scrape')
 
 # Connect to database
