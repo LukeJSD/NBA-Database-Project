@@ -7,12 +7,14 @@ import nba_scrape
 
 current_year = 2020
 
+# Enter database credentials
+user = input('Username: ')
+secret = getpass.getpass(prompt='Password: ')
+
 # This takes a while on the first run
 exec('nba_scrape')
 
 # Connect to database
-user = input('Username: ')
-secret = getpass.getpass(prompt='Password: ')
 print('Trying to connect...')
 db = pg8000.connect(user=user, password=secret, host='bartik.mines.edu', database='csci403')
 cursor = db.cursor()
