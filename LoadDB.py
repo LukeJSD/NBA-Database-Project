@@ -172,43 +172,6 @@ for year in [y for y in range(1956, 2021)]:
                 game_errors.append([note, year, r])
                 cursor.execute('ROLLBACK;')
 
-    print('Draft...', end='')
-    copy_command = 'INSERT INTO nba_drafts VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s);'
-    with open(f'Drafts/{year}_draft.csv', 'r', encoding='utf-8') as f:
-        csv_read = csv.reader(f)
-        header = []
-        header = True
-        note = ''
-        for row in csv_read:
-            if header:
-                header = False
-                continue
-            r = []
-            for entry in row:
-                if '.' in entry:
-                    try:
-                        r.append(float(entry))
-                    except:
-                        r.append(entry)
-                else:
-                    try:
-                        r.append(int(entry))
-                    except:
-                        r.append(entry)
-            id_key = r[3].replace(' ', '_') + '_' + str(year) + '_' + str(r[1])
-            try:
-                cursor.execute(copy_command, (
-                id_key, year, r[0], r[1], r[2], r[3], r[4], r[5], r[6], r[7], r[8], r[9], r[10], r[11], r[12], r[13],
-                r[14], r[15], r[16], r[17], r[18], r[19], r[20], r[21]))
-            except Exception as e:
-                print('dft', e)
-                print(id_key, year, r)
-                draft_errors.append([id_key, year, r])
-                cursor.execute('ROLLBACK;')
-
-    if year == current_year:
-        break
-
     print('Standings...', end='')
     copy_command = 'INSERT INTO nba_standings VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);'
     with open(f'Standings/standings_{year}.csv', 'r') as f:
@@ -246,6 +209,42 @@ for year in [y for y in range(1956, 2021)]:
                 draft_errors.append([year, r])
                 cursor.execute('ROLLBACK;')
 
+    if not year == current_year:
+        print('Draft...', end='')
+        copy_command = 'INSERT INTO nba_drafts VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s);'
+        with open(f'Drafts/{year}_draft.csv', 'r', encoding='utf-8') as f:
+            csv_read = csv.reader(f)
+            header = []
+            header = True
+            note = ''
+            for row in csv_read:
+                if header:
+                    header = False
+                    continue
+                r = []
+                for entry in row:
+                    if '.' in entry:
+                        try:
+                            r.append(float(entry))
+                        except:
+                            r.append(entry)
+                    else:
+                        try:
+                            r.append(int(entry))
+                        except:
+                            r.append(entry)
+                id_key = r[3].replace(' ', '_') + '_' + str(year) + '_' + str(r[1])
+                try:
+                    cursor.execute(copy_command, (
+                        id_key, year, r[0], r[1], r[2], r[3], r[4], r[5], r[6], r[7], r[8], r[9], r[10], r[11], r[12],
+                        r[13],
+                        r[14], r[15], r[16], r[17], r[18], r[19], r[20], r[21]))
+                except Exception as e:
+                    print('dft', e)
+                    print(id_key, year, r)
+                    draft_errors.append([id_key, year, r])
+                    cursor.execute('ROLLBACK;')
+
     if path.exists(f'PlayerStats/{year}_advanced.csv'):
         os.remove(f'PlayerStats/{year}_advanced.csv')
     if path.exists(f'PlayerStats/{year}_totals.csv'):
@@ -272,11 +271,6 @@ with open(f'Standings/gen_hist.csv', 'r', encoding='utf-8') as f:
             continue
         r = []
         for entry in row:
-            if type(entry) == str:
-                maxord = max(ord(char) for char in entry)
-                if maxord >= 128:
-                    r.append(0)
-                    continue
             if '.' in entry:
                 try:
                     r.append(float(entry))
@@ -314,7 +308,7 @@ cursor.execute("UPDATE nba_games SET OT=NULL WHERE OT='';")
 
 db.commit()
 
-print('Database Loaded in', time.clock() - start_time, 'minutes')
+print('Database Loaded in', (time.clock() - start_time) / 60, 'minutes')
 
 with open('error_inserts.csv', 'a') as f:
     for e in tot_errors:
