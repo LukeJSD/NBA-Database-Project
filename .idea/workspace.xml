@@ -3,7 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="2a393430-3e98-4d11-8d42-eebb9dfbc93e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LoadMoreDB.py" beforeDir="false" afterPath="$PROJECT_DIR$/LoadMoreDB.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LoadDB.py" beforeDir="false" afterPath="$PROJECT_DIR$/LoadDB.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LoadMoreDB.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Testing.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/abreviations.csv" beforeDir="false" afterPath="$PROJECT_DIR$/abreviations.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/error_inserts.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/nba_scrape.py" beforeDir="false" afterPath="$PROJECT_DIR$/nba_scrape.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,7 +37,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/LoadMoreDB.py" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/LoadDB.py" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
@@ -41,7 +46,7 @@
     </key>
   </component>
   <component name="RunManager">
-    <configuration name="LoadMoreDB" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="LoadDB" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="FinalProject" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -54,7 +59,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/LoadMoreDB.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/LoadDB.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -87,7 +92,7 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.LoadMoreDB" />
+        <item itemvalue="Python.LoadDB" />
       </list>
     </recent_temporary>
   </component>
@@ -103,7 +108,7 @@
       <updated>1588008391216</updated>
       <workItem from="1588008395640" duration="487000" />
       <workItem from="1588009096507" duration="57068000" />
-      <workItem from="1588188173577" duration="9746000" />
+      <workItem from="1588188173577" duration="16024000" />
     </task>
     <task id="LOCAL-00001" summary="Created file to load draft, standings, and averages">
       <created>1588193482752</created>
@@ -131,34 +136,34 @@
     <option name="LAST_COMMIT_MESSAGE" value="Added to LoadMoreDB.py" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="191" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1588197157575">
+    <state x="191" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1588315522429">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="191" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.680@0.0.1280.680" timestamp="1588197157575" />
+    <state x="191" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.680@0.0.1280.680" timestamp="1588315522429" />
     <state x="212" y="0" key="CommitChangelistDialog2" timestamp="1588203839824">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="212" y="0" key="CommitChangelistDialog2/0.0.1280.680@0.0.1280.680" timestamp="1588203839824" />
-    <state x="740" y="95" key="FileChooserDialogImpl" timestamp="1588197155671">
+    <state x="740" y="95" key="FileChooserDialogImpl" timestamp="1588315520651">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="740" y="95" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1588197155671" />
-    <state width="1237" height="117" key="GridCell.Tab.0.bottom" timestamp="1588198379415">
+    <state x="740" y="95" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1588315520651" />
+    <state width="609" height="107" key="GridCell.Tab.0.bottom" timestamp="1588315823493">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="117" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1588198379415" />
-    <state width="1237" height="117" key="GridCell.Tab.0.center" timestamp="1588198379415">
+    <state width="609" height="107" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1588315823493" />
+    <state width="609" height="107" key="GridCell.Tab.0.center" timestamp="1588315823492">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="117" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1588198379415" />
-    <state width="1237" height="117" key="GridCell.Tab.0.left" timestamp="1588198379414">
+    <state width="609" height="107" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1588315823492" />
+    <state width="609" height="107" key="GridCell.Tab.0.left" timestamp="1588315823491">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="117" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1588198379414" />
-    <state width="1237" height="117" key="GridCell.Tab.0.right" timestamp="1588198379415">
+    <state width="609" height="107" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1588315823491" />
+    <state width="609" height="107" key="GridCell.Tab.0.right" timestamp="1588315823492">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="117" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1588198379415" />
+    <state width="609" height="107" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1588315823492" />
     <state width="1237" height="204" key="GridCell.Tab.1.bottom" timestamp="1588156030037">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
@@ -204,7 +209,7 @@
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/FinalProject$LoadMoreDB.coverage" NAME="LoadMoreDB Coverage Results" MODIFIED="1588198379404" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/FinalProject$LoadMoreDB.coverage" NAME="LoadDB Coverage Results" MODIFIED="1588315823459" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/FinalProject$nba_scrape.coverage" NAME="LoadDB Coverage Results" MODIFIED="1588129968188" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

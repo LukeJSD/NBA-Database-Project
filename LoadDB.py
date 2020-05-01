@@ -5,6 +5,8 @@ from os import path
 import csv
 import nba_scrape
 
+current_year = 2020
+
 # This takes a while on the first run
 exec('nba_scrape')
 
@@ -16,23 +18,31 @@ db = pg8000.connect(user=user, password=secret, host='bartik.mines.edu', databas
 cursor = db.cursor()
 print('Connected')
 
+cursor.execute("DROP TABLE IF EXISTS nba_abbreviations;")
+print('nba_abbreviations deleted...', end='')
 cursor.execute("DROP TABLE IF EXISTS nba_tot_seasons;")
 print('nba_tot_seasons deleted...', end='')
 cursor.execute("DROP TABLE IF EXISTS nba_adv_seasons;")
 print('nba_adv_seasons deleted...', end='')
 cursor.execute("DROP TABLE IF EXISTS nba_games;")
 print('nba_games deleted...', end='')
-cursor.execute("DROP TABLE IF EXISTS nba_abbreviations;")
-print('nba_abbreviations deleted...', end='')
+cursor.execute("DROP TABLE IF EXISTS nba_standings;")
+print('nba_standings deleted...', end='')
+cursor.execute("DROP TABLE IF EXISTS nba_drafts;")
+print('nba_drafts deleted...', end='')
+cursor.execute("DROP TABLE IF EXISTS nba_history;")
+print('nba_history deleted...', end='')
 
 db.commit()
 print('Tables cleared')
 
-cursor.execute("CREATE TABLE nba_abbreviations_temp (Name VARCHAR(50), Abbreviations VARCHAR(4));")
-cursor.execute("CREATE TABLE NBA_tot_seasons (ID VARCHAR(50) PRIMARY KEY, Year INTEGER, R INTEGER, Player VARCHAR(50), Pos VARCHAR(5), BasePos VARCHAR(2), Age NUMERIC(4,1), Tm VARCHAR(50), G NUMERIC(4,1), GS NUMERIC(4,1), MP NUMERIC(6,1), FG NUMERIC(5,1), FGA NUMERIC(5,1), FGpercent NUMERIC(4,3), ThrP NUMERIC(5,1), ThrPA NUMERIC(5,1), ThrPpercent NUMERIC(4,3), TwoP NUMERIC(5,1), TwoPA NUMERIC(5,1), TwoPpercent NUMERIC(4,3), eFGpercent NUMERIC(4,3), FT NUMERIC(5,1), FTA NUMERIC(5,1), FTpercent NUMERIC(4,3), ORB NUMERIC(5,1), DRB NUMERIC(5,1), TRB NUMERIC(5,1), AST NUMERIC(5,1), STL NUMERIC(4,1), BLK NUMERIC(4,1), TOV NUMERIC(5,1), PF NUMERIC(4,1), PTS NUMERIC(6,1));")
-cursor.execute("CREATE TABLE nba_adv_seasons(ID VARCHAR(50) PRIMARY KEY, Year INTEGER, R INTEGER, Player VARCHAR(50), Pos VARCHAR(5), BasePos VARCHAR(2), Age NUMERIC(4,1), Tm VARCHAR(50), G NUMERIC(4,1), MP NUMERIC(6,1), PER NUMERIC(4,1), TSpercent NUMERIC(4,3), ThrPAr NUMERIC(4,3), FTr NUMERIC(4,3), ORBpercent NUMERIC(4,1), DRBpercent NUMERIC(4,1), TRBpercent NUMERIC(4,1), ASTpercent NUMERIC(4,1), STLpercent NUMERIC(4,1), BLKpercent NUMERIC(4,1), TOVpercent NUMERIC(4,1), USG NUMERIC(4,1), zeroA NUMERIC(2,1), OWS NUMERIC(4,1), DWS NUMERIC(4,1), WS NUMERIC(4,1), WSper48 NUMERIC(2,1), OBPM NUMERIC(4,1), DBPM NUMERIC(4,1), BPM NUMERIC(4,1), VORP NUMERIC(2,1));")
-cursor.execute("CREATE TABLE nba_games(Year INTEGER, Date DATE, href VARCHAR(50), Visitor VARCHAR(50), VPts INTEGER, Home VARCHAR(50), HPts INTEGER, OT VARCHAR(4), Attend INTEGER, Notes VARCHAR(100));")
 cursor.execute("CREATE TABLE nba_abbreviations(Team VARCHAR(50), Abrev VARCHAR(4));")
+cursor.execute("CREATE TABLE NBA_tot_seasons (ID VARCHAR(50) PRIMARY KEY, Year INTEGER, R INTEGER, Player VARCHAR(50), Pos VARCHAR(5), BasePos VARCHAR(2), Age NUMERIC(4,1), Tm VARCHAR(50), G NUMERIC(4,1), GS NUMERIC(4,1), MP NUMERIC(6,1), FG NUMERIC(5,1), FGA NUMERIC(5,1), FGpercent NUMERIC(4,3), ThrP NUMERIC(5,1), ThrPA NUMERIC(5,1), ThrPpercent NUMERIC(4,3), TwoP NUMERIC(5,1), TwoPA NUMERIC(5,1), TwoPpercent NUMERIC(4,3), eFGpercent NUMERIC(4,3), FT NUMERIC(5,1), FTA NUMERIC(5,1), FTpercent NUMERIC(4,3), ORB NUMERIC(5,1), DRB NUMERIC(5,1), TRB NUMERIC(5,1), AST NUMERIC(5,1), STL NUMERIC(4,1), BLK NUMERIC(4,1), TOV NUMERIC(5,1), PF NUMERIC(4,1), PTS NUMERIC(6,1), FOREIGN KEY (Tm) REFERENCES nba_abbreviations(Abrev));")
+cursor.execute("CREATE TABLE nba_adv_seasons(ID VARCHAR(50) PRIMARY KEY, Year INTEGER, R INTEGER, Player VARCHAR(50), Pos VARCHAR(5), BasePos VARCHAR(2), Age NUMERIC(4,1), Tm VARCHAR(50), G NUMERIC(4,1), MP NUMERIC(6,1), PER NUMERIC(6,3), TSpercent NUMERIC(6,5), ThrPAr NUMERIC(6,5), FTr NUMERIC(6,5), ORBpercent NUMERIC(6,3), DRBpercent NUMERIC(6,3), TRBpercent NUMERIC(6,3), ASTpercent NUMERIC(6,3), STLpercent NUMERIC(6,3), BLKpercent NUMERIC(6,3), TOVpercent NUMERIC(6,3), USG NUMERIC(6,3), zeroA NUMERIC(4,3), OWS NUMERIC(6,3), DWS NUMERIC(6,3), WS NUMERIC(6,3), WSper48 NUMERIC(4,3), OBPM NUMERIC(6,3), DBPM NUMERIC(6,3), BPM NUMERIC(6,3), VORP NUMERIC(5,3), FOREIGN KEY (Tm) REFERENCES nba_abbreviations(Abrev));")
+cursor.execute("CREATE TABLE nba_games(Year INTEGER, Date DATE, href VARCHAR(50), Visitor VARCHAR(50), VPts INTEGER, Home VARCHAR(50), HPts INTEGER, OT VARCHAR(4), Attend INTEGER, Notes VARCHAR(100), FOREIGN KEY (Home) REFERENCES nba_abbreviations(Team), FOREIGN KEY (Visitor) REFERENCES nba_abbreviations(Team));")
+cursor.execute("CREATE TABLE nba_standings (ID VARCHAR(50), Year INTEGER, R INTEGER, Tm VARCHAR(50), W INTEGER, L INTEGER, Wpercent NUMERIC(4,3), GB NUMERIC(3,1), PSperG NUMERIC(4,1), PAperG NUMERIC(4,1), SRS NUMERIC(4,2), FOREIGN KEY (Tm) REFERENCES nba_abbreviations(Team));")
+cursor.execute("CREATE TABLE nba_drafts (ID VARCHAR(50), Year INTEGER, R INTEGER, Pk INTEGER, Tm VARCHAR(50), Player VARCHAR(50), College VARCHAR(50), Yrs INTEGER, G INTEGER, MP INTEGER, PTS INTEGER, TRB INTEGER, AST INTEGER, FGpercent NUMERIC(4,3), ThrP NUMERIC(5,1), FTpercent NUMERIC(4,3), MPperGm NUMERIC(7,3), PTSperGM NUMERIC(7,3), TRBperGm NUMERIC(7,3), ASTperGM NUMERIC(7,3), WS NUMERIC(5,2), WSper48 NUMERIC(7,3), BPM NUMERIC(3,1), VORP NUMERIC(4,1));")
+cursor.execute("CREATE TABLE nba_history (R INTEGER,Yr INTEGER,Lg VARCHAR(3),Champion VARCHAR(50),MVP VARCHAR(50),ROY VARCHAR(50),Points VARCHAR(50),Rebounds VARCHAR(50),Assists VARCHAR(50),WS VARCHAR(50));")        #  FOREIGN KEY (Champion) REFERENCES nba_abbreviations(Team)
 
 copy_command = 'INSERT INTO nba_abbreviations VALUES (%s, %s);'
 with open(f'abreviations.csv', 'r') as f:
@@ -45,6 +55,8 @@ db.commit()
 tot_errors = []
 adv_errors = []
 game_errors = []
+draft_errors = []
+standings_errors = []
 
 for year in [y for y in range(1956, 2021)]:
     print('Totals...',end='')
@@ -151,21 +163,141 @@ for year in [y for y in range(1956, 2021)]:
                 game_errors.append([note, year, r])
                 cursor.execute('ROLLBACK;')
 
+    print('Draft...', end='')
+    copy_command = 'INSERT INTO nba_drafts VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s);'
+    with open(f'Drafts/{year}_draft.csv', 'r', encoding='utf-8') as f:
+        csv_read = csv.reader(f)
+        header = []
+        header = True
+        note = ''
+        for row in csv_read:
+            if header:
+                header = False
+                continue
+            r = []
+            for entry in row:
+                if '.' in entry:
+                    try:
+                        r.append(float(entry))
+                    except:
+                        r.append(entry)
+                else:
+                    try:
+                        r.append(int(entry))
+                    except:
+                        r.append(entry)
+            id_key = r[3].replace(' ', '_') + '_' + str(year) + '_' + str(r[1])
+            try:
+                cursor.execute(copy_command, (
+                id_key, year, r[0], r[1], r[2], r[3], r[4], r[5], r[6], r[7], r[8], r[9], r[10], r[11], r[12], r[13],
+                r[14], r[15], r[16], r[17], r[18], r[19], r[20], r[21]))
+            except Exception as e:
+                print('dft', e)
+                print(id_key, year, r)
+                draft_errors.append([id_key, year, r])
+                cursor.execute('ROLLBACK;')
+
+    if year == current_year:
+        break
+
+    print('Standings...', end='')
+    copy_command = 'INSERT INTO nba_standings VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);'
+    with open(f'Standings/standings_{year}.csv', 'r') as f:
+        csv_read = csv.reader(f)
+        header = []
+        header = True
+        note = ''
+        for row in csv_read:
+            if header:
+                header = False
+                continue
+            r = []
+            for entry in row:
+                if type(entry) == str:
+                    maxord = max(ord(char) for char in entry)
+                    if maxord >= 128:
+                        r.append(0)
+                        continue
+                if '.' in entry:
+                    try:
+                        r.append(float(entry))
+                    except:
+                        r.append(entry)
+                else:
+                    try:
+                        r.append(int(entry))
+                    except:
+                        r.append(entry)
+            id_key = r[1].replace(' ', '_') + '_' + str(year)
+            try:
+                cursor.execute(copy_command, (id_key, year, r[0], r[1], r[2], r[3], r[4], r[5], r[6], r[7], r[8]))
+            except Exception as e:
+                print('std', e)
+                print(id_key, year, r)
+                draft_errors.append([year, r])
+                cursor.execute('ROLLBACK;')
+
     if path.exists(f'PlayerStats/{year}_advanced.csv'):
         os.remove(f'PlayerStats/{year}_advanced.csv')
     if path.exists(f'PlayerStats/{year}_totals.csv'):
         os.remove(f'PlayerStats/{year}_totals.csv')
     if path.exists(f'Games/games{year}.csv'):
         os.remove(f'Games/games{year}.csv')
+    if path.exists(f'Standings/standings_{year}.csv'):
+        os.remove(f'Standings/standings_{year}.csv')
+    if path.exists(f'Drafts/{year}_draft.csv'):
+        os.remove(f'Drafts/{year}_draft.csv')
 
     print(year, 'loaded')
 
     db.commit()
 
+copy_command = 'INSERT INTO nba_history VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);'
+with open(f'Standings/gen_hist.csv', 'r', encoding='utf-8') as f:
+    csv_read = csv.reader(f)
+    header = True
+    note = ''
+    for row in csv_read:
+        if header:
+            header = False
+            continue
+        r = []
+        for entry in row:
+            if type(entry) == str:
+                maxord = max(ord(char) for char in entry)
+                if maxord >= 128:
+                    r.append(0)
+                    continue
+            if '.' in entry:
+                try:
+                    r.append(float(entry))
+                except:
+                    r.append(entry)
+            else:
+                try:
+                    r.append(int(entry))
+                except:
+                    r.append(entry)
+        try:
+            cursor.execute(copy_command, (r[0], r[1], r[2], r[3], r[4], r[5], r[6], r[7], r[8], r[9]))
+        except Exception as e:
+            print('hist', e)
+            print(r)
+            cursor.execute('ROLLBACK;')
+
+db.commit()
+
+if path.exists(f'Standings/gen_hist.csv'):
+    os.remove(f'Standings/gen_hist.csv')
+
 if len(os.listdir('PlayerStats')) == 0:
     os.rmdir('PlayerStats')
 if len(os.listdir('Games')) == 0:
     os.rmdir('Games')
+if len(os.listdir('Standings')) == 0:
+    os.rmdir('Standings')
+if len(os.listdir('Drafts')) == 0:
+    os.rmdir('Drafts')
 
 cursor.execute("UPDATE nba_games SET Attend=NULL WHERE Attend=-1;")
 cursor.execute("UPDATE nba_games SET OT=NULL WHERE OT='';")
@@ -196,6 +328,21 @@ with open('error_inserts.csv', 'a') as f:
         for i in e[2]:
             f.write(','+str(i))
         f.write('\n')
+    for e in draft_errors:
+        f.write('tot')
+        f.write(','+str(e[0]))
+        f.write(','+str(e[1]))
+        for i in e[2]:
+            f.write(','+str(i))
+        f.write('\n')
+    for e in standings_errors:
+        f.write('game')
+        f.write(','+str(e[0]))
+        for i in e[1]:
+            f.write(','+str(i))
+        f.write('\n')
+
+
 
 # If hanging:
 # SELECT query,pid,usesysid,usename,state FROM pg_stat_activity WHERE state LIKE '%idle%;

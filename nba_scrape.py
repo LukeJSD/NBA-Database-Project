@@ -1,27 +1,13 @@
-import json
-import pydot
-import requests
 import os
 import io
-import numpy as np
 import pandas as pd
 import unidecode
 import string
-from pprint import pprint
-from datetime import datetime
 from urllib.request import urlopen
 from bs4 import BeautifulSoup
-from itertools import repeat
-from math import isnan
 import csv
-from urllib import parse
-from requests_html import HTMLSession
-from lxml import html
-import datetime
-from collections import OrderedDict
-from datetime import timedelta
 
-target_directory="C:/Users/luke/Documents/College/2019-2020/Semester 6/Database/FinalProject/"
+target_directory = '/'.join(os.path.abspath('nba_scrape.py').split('\\')[:-1]) + '/'
 categories = ['totals', 'advanced']     # ["per_game", "totals", "per_poss", "advanced", "per_minute"]
 not_avg = ["advanced"]
 years = [y for y in range(1956, 2021)]
@@ -31,6 +17,10 @@ if not os.path.exists(target_directory+'/PlayerStats'):
     os.mkdir(target_directory+'/PlayerStats')
 if not os.path.exists(target_directory+'/Games'):
     os.mkdir(target_directory+'/Games')
+if not os.path.exists(target_directory+'/Standings'):
+    os.mkdir(target_directory+'/Standings')
+if not os.path.exists(target_directory+'/Draft'):
+    os.mkdir(target_directory+'/Draft')
 
 
 def make_csv(df, string):
