@@ -3,6 +3,9 @@ import getpass
 import os
 from os import path
 import csv
+import time
+
+start_time = time.clock()
 
 current_year = 2020
 
@@ -310,7 +313,7 @@ cursor.execute("UPDATE nba_games SET OT=NULL WHERE OT='';")
 
 db.commit()
 
-print('Done')
+print('Database Loaded in', time.clock() - start_time, 'minutes')
 
 with open('error_inserts.csv', 'a') as f:
     for e in tot_errors:
