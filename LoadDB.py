@@ -12,7 +12,7 @@ exec('nba_scrape')
 
 # Connect to database
 user = input('Username: ')
-secret = getpass.getpass()
+secret = getpass.getpass(prompt='Password: ')
 print('Trying to connect...')
 db = pg8000.connect(user=user, password=secret, host='bartik.mines.edu', database='csci403')
 cursor = db.cursor()
