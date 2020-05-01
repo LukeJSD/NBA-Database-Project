@@ -287,8 +287,6 @@ def main_func():
             standings[year]=scrape_standings(year)
     print("Standings Loaded")
 
-    abrev=pd.read_csv("C:/Users/luke/Git Projects/Bball_ref_scrape/abreviations.csv")
-
     try:
         html=urlopen(f"https://www.basketball-reference.com/leagues/")
     except Exception as e:
