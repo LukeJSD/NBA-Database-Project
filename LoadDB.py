@@ -84,6 +84,8 @@ for year in [y for y in range(1956, 2021)]:
                 i += 1
                 continue
             r = []
+            if row[5] == 'CHH':
+                r[5] = 'CHO'
             for entry in row:
                 if '.' in entry:
                     try:
@@ -114,6 +116,8 @@ for year in [y for y in range(1956, 2021)]:
                 i += 1
                 continue
             r = []
+            if row[5] == 'CHH':
+                r[5] = 'CHO'
             for entry in row:
                 if '.' in entry:
                     try:
