@@ -41,7 +41,7 @@ print('nba_abbreviations deleted...', end='')
 db.commit()
 print('Tables cleared')
 
-cursor.execute("CREATE TABLE nba_abbreviations(Team VARCHAR(50), Abrev VARCHAR(4) UNIQUE);")
+cursor.execute("CREATE TABLE nba_abbreviations(Team VARCHAR(50) UNIQUE, Abrev VARCHAR(4) PRIMARY KEY);")
 cursor.execute("CREATE TABLE NBA_tot_seasons (ID VARCHAR(50) PRIMARY KEY, Year INTEGER, R INTEGER, Player VARCHAR(50), Pos VARCHAR(5), BasePos VARCHAR(2), Age NUMERIC(4,1), Tm VARCHAR(50), G NUMERIC(4,1), GS NUMERIC(4,1), MP NUMERIC(6,1), FG NUMERIC(5,1), FGA NUMERIC(5,1), FGpercent NUMERIC(4,3), ThrP NUMERIC(5,1), ThrPA NUMERIC(5,1), ThrPpercent NUMERIC(4,3), TwoP NUMERIC(5,1), TwoPA NUMERIC(5,1), TwoPpercent NUMERIC(4,3), eFGpercent NUMERIC(4,3), FT NUMERIC(5,1), FTA NUMERIC(5,1), FTpercent NUMERIC(4,3), ORB NUMERIC(5,1), DRB NUMERIC(5,1), TRB NUMERIC(5,1), AST NUMERIC(5,1), STL NUMERIC(4,1), BLK NUMERIC(4,1), TOV NUMERIC(5,1), PF NUMERIC(4,1), PTS NUMERIC(6,1), FOREIGN KEY (Tm) REFERENCES nba_abbreviations(Abrev));")
 cursor.execute("CREATE TABLE nba_adv_seasons(ID VARCHAR(50) PRIMARY KEY, Year INTEGER, R INTEGER, Player VARCHAR(50), Pos VARCHAR(5), BasePos VARCHAR(2), Age NUMERIC(4,1), Tm VARCHAR(50), G NUMERIC(4,1), MP NUMERIC(6,1), PER NUMERIC(6,3), TSpercent NUMERIC(6,5), ThrPAr NUMERIC(6,5), FTr NUMERIC(6,5), ORBpercent NUMERIC(6,3), DRBpercent NUMERIC(6,3), TRBpercent NUMERIC(6,3), ASTpercent NUMERIC(6,3), STLpercent NUMERIC(6,3), BLKpercent NUMERIC(6,3), TOVpercent NUMERIC(6,3), USG NUMERIC(6,3), zeroA NUMERIC(4,3), OWS NUMERIC(6,3), DWS NUMERIC(6,3), WS NUMERIC(6,3), WSper48 NUMERIC(4,3), OBPM NUMERIC(6,3), DBPM NUMERIC(6,3), BPM NUMERIC(6,3), VORP NUMERIC(5,3), FOREIGN KEY (Tm) REFERENCES nba_abbreviations(Abrev));")
 cursor.execute("CREATE TABLE nba_games(Year INTEGER, Date DATE, href VARCHAR(50), Visitor VARCHAR(50), VPts INTEGER, Home VARCHAR(50), HPts INTEGER, OT VARCHAR(4), Attend INTEGER, Notes VARCHAR(100));")
@@ -57,7 +57,13 @@ with open(f'abreviations.csv', 'r') as f:
         if header:
             header = False
             continue
-        cursor.execute(copy_command, (row[0], row[1]))
+        if row[1] == 'CHH':
+            continue
+        try:
+            cursor.execute(copy_command, (row[0], row[1]))
+        except Exception as e:
+            print(e, row)
+            cursor.execute('ROLLBACK;')
 
 db.commit()
 
